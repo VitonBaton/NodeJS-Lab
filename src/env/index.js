@@ -12,5 +12,8 @@ module.exports = {
     app: {
         port: process.env.APP_PORT || '9999'
     },
+    mongo: {
+        port: process.env.MONGO_PORT || '27017'
+    },
     secretKey: process.env.JWT_SECRET_KEY || 'MEGA_SECRET_KEY'
 };
