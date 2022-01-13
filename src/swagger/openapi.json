@@ -1,2049 +1,2018 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "Rest API for taxi",
-    "version": "1.0.0",
-    "description": "Rest API for taxi"
-  },
-  "servers": [
-    {
-      "url": "localhost:9999",
-      "description": "Local server"
-    }
-  ],
-  "tags": [
-    {
-      "name": "auth",
-      "description": "Login and signup operations"
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Rest API for taxi",
+        "version": "1.0.0",
+        "description": "Rest API for taxi"
     },
-    {
-      "name": "users",
-      "description": "Operations with users"
-    },
-    {
-      "name": "drivers",
-      "description": "Operations with drivers"
-    },
-    {
-      "name": "orders",
-      "description": "Operations with orders"
-    }
-  ],
-  "paths": {
-    "/login": {
-      "post": {
-        "tags": [
-          "auth"
-        ],
-        "summary": "Log in to your account",
-        "operationId": "login",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/loginForm"
-              }
-            }
-          }
+    "servers": [{
+        "url": "http://localhost:9999/",
+        "description": "Local server"
+    }],
+    "tags": [{
+            "name": "auth",
+            "description": "Login and signup operations"
         },
-        "responses": {
-          "200": {
-            "description": "Succsessfully log in",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/loginRes"
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Something wrong in query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
+        {
+            "name": "users",
+            "description": "Operations with users"
+        },
+        {
+            "name": "drivers",
+            "description": "Operations with drivers"
+        },
+        {
+            "name": "orders",
+            "description": "Operations with orders"
         }
-      }
-    },
-    "/signup": {
-      "post": {
-        "tags": [
-          "auth"
-        ],
-        "summary": "creating new account",
-        "operationId": "signup",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/signForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Account created, returned id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "$ref": "#/components/schemas/id"
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Log in to your account",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/loginForm"
+                            }
+                        }
                     }
-                  }
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Something wrong in request body",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users": {
-      "get": {
-        "tags": [
-          "users"
-        ],
-        "summary": "get all users",
-        "operationId": "getAllUsers",
-        "responses": {
-          "200": {
-            "description": "Array of users returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Users"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "users"
-        ],
-        "summary": "Create user by admin",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserPost"
-              }
-            }
-          }
-        },
-        "operationId": "createUser",
-        "responses": {
-          "200": {
-            "description": "Account created, returned id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "$ref": "#/components/schemas/id"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succsessfully log in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/loginRes"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Something wrong in query",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
             }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Something wrong in request body",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/info": {
-      "get": {
-        "tags": [
-          "users"
-        ],
-        "summary": "get info about authorized user",
-        "operationId": "getUserInfo",
-        "responses": {
-          "200": {
-            "description": "User info returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserInfo"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "users"
-        ],
-        "summary": "update info about user",
-        "operationId": "putUserInfo",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserInfoPut"
-              }
-            }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "User info returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserInfo"
+        "/signup": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "creating new account",
+                "operationId": "signup",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/signForm"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Account created, returned id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "$ref": "#/components/schemas/id"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Something wrong in request body",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Something wrong in request body",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/password": {
-      "patch": {
-        "tags": [
-          "users"
-        ],
-        "summary": "change user's password",
-        "operationId": "changePassword",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChangePassword"
-              }
-            }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "User returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
+        "/users": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "get all users",
+                "operationId": "getAllUsers",
+                "responses": {
+                    "200": {
+                        "description": "Array of users returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Users"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
+            },
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Create user by admin",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserPost"
+                            }
+                        }
+                    }
+                },
+                "operationId": "createUser",
+                "responses": {
+                    "200": {
+                        "description": "Account created, returned id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "$ref": "#/components/schemas/id"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Something wrong in request body",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          },
-          "406": {
-            "description": "Something wrong in request body",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
+        },
+        "/users/info": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "get info about authorized user",
+                "operationId": "getUserInfo",
+                "responses": {
+                    "200": {
+                        "description": "User info returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserInfo"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
+            },
+            "put": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "update info about user",
+                "operationId": "putUserInfo",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserInfoPut"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User info returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserInfo"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Something wrong in request body",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
             }
-          }
+        },
+        "/users/password": {
+            "patch": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "change user's password",
+                "operationId": "changePassword",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangePassword"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Something wrong in request body",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/freeze": {
+            "patch": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Blocks/unblocks user",
+                "operationId": "freezeUser",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "User successfully blocked/unblocked",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "example": "User active status has changed"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Gets user by id",
+                "operationId": "getUserById",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "User returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete user by id",
+                "operationId": "deleteUserById",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "User deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "example": "User successfully deleted"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/setRole": {
+            "patch": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Set user role",
+                "operationId": "setUserRole",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "role": {
+                                        "$ref": "#/components/schemas/role"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User role changed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Something wrong in request body",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers": {
+            "get": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "get all drivers",
+                "operationId": "getAllDrivers",
+                "responses": {
+                    "200": {
+                        "description": "Array of drivers returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Drivers"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "Create driver by admin",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DriverPost"
+                            }
+                        }
+                    }
+                },
+                "operationId": "createDriver",
+                "responses": {
+                    "200": {
+                        "description": "Driver created, returned id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "$ref": "#/components/schemas/id"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Something wrong in request body",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/{id}": {
+            "get": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "Gets driver by id",
+                "operationId": "getDriverById",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Driver returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Driver"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Driver not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "Change car",
+                "operationId": "changeCar",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "carId": {
+                                        "$ref": "#/components/schemas/id"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Car changed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Driver"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Driver/car not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Something wrong in request body",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/cars": {
+            "get": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "get all cars",
+                "operationId": "getAllCars",
+                "responses": {
+                    "200": {
+                        "description": "Array of cars returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cars"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "Create car by admin",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CarPost"
+                            }
+                        }
+                    }
+                },
+                "operationId": "createCar",
+                "responses": {
+                    "200": {
+                        "description": "Car created, returned id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "$ref": "#/components/schemas/id"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Something wrong in request body",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/cars/{id}": {
+            "get": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "Gets car by id",
+                "operationId": "getCarById",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Car returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Car"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Car not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "Delete car by id",
+                "operationId": "deleteCarById",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Car deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "example": "Car successfully deleted"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Car not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/comforts": {
+            "get": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "get all comforts",
+                "operationId": "getAllComforts",
+                "responses": {
+                    "200": {
+                        "description": "Array of comforts returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comforts"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/comforts/{id}/drivers": {
+            "get": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "get drivers for comfort type",
+                "operationId": "getDriversForComfort",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Drivers returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DriversWithCars"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Comfort type not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/drivers/feedbacks": {
+            "get": {
+                "tags": [
+                    "drivers"
+                ],
+                "summary": "get all feedbacks of driver",
+                "operationId": "getFeedbacks",
+                "responses": {
+                    "200": {
+                        "description": "Array of feedbacks returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Feedbacks"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Driver not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "get": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "get all users with their orders",
+                "operationId": "getAllOrdersWithUsers",
+                "responses": {
+                    "200": {
+                        "description": "Array of users returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsersWithOrders"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Create order",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderPost"
+                            }
+                        }
+                    }
+                },
+                "operationId": "createOrder",
+                "responses": {
+                    "200": {
+                        "description": "Order created, returned order info",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "$ref": "#/components/schemas/Order"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Something wrong in request body",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/history": {
+            "get": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "get all orders of current user",
+                "operationId": "getAllOrders",
+                "responses": {
+                    "200": {
+                        "description": "Array of orders returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Orders"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{id}": {
+            "get": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get order by id",
+                "operationId": "getOrderById",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Order returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Order not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Cancel order by id",
+                "operationId": "cancelOrder",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Order canceled",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights or order cannot be canceled",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Order not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Close order by driver",
+                "operationId": "closeOrder",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Order closed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights or order cannot be closed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Order not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{id}/accept": {
+            "patch": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Accept order by driver",
+                "operationId": "acceptOrder",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Order accepted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights or order cannot be accepted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Order not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{id}/feedback": {
+            "post": {
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Create feedback",
+                "operationId": "createFeedback",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "schema": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FeedbackPost"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Feedback created, returned feedback info",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "$ref": "#/components/schemas/Feedback"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Not enought rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Order not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Something wrong in request body",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-      }
     },
-    "/users/{id}/freeze": {
-      "patch": {
-        "tags": [
-          "users"
-        ],
-        "summary": "Blocks/unblocks user",
-        "operationId": "freezeUser",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
+    "components": {
+        "schemas": {
+            "id": {
+                "type": "integer",
+                "example": 1
             },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User successfully blocked/unblocked",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "example": "User active status has changed"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/{id}": {
-      "get": {
-        "tags": [
-          "users"
-        ],
-        "summary": "Gets user by id",
-        "operationId": "getUserById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
+            "token": {
+                "type": "string",
+                "description": "user jwt-token"
             },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "users"
-        ],
-        "summary": "Delete user by id",
-        "operationId": "deleteUserById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
+            "login": {
+                "type": "string"
             },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User deleted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "example": "User successfully deleted"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/{id}/setRole": {
-      "patch": {
-        "tags": [
-          "users"
-        ],
-        "summary": "Set user role",
-        "operationId": "setUserRole",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
+            "password": {
+                "type": "string"
             },
-            "required": true
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
+            "email": {
+                "type": "string",
+                "example": "email@email.com"
+            },
+            "role": {
+                "type": "string",
+                "enum": [
+                    "user",
+                    "driver",
+                    "admin"
+                ]
+            },
+            "isActive": {
+                "type": "boolean",
+                "default": true
+            },
+            "isConfirmed": {
+                "type": "boolean",
+                "default": true
+            },
+            "createdAt": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "string": {
+                "type": "string"
+            },
+            "date": {
+                "type": "string",
+                "format": "date"
+            },
+            "datetime": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "raiting": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 5,
+                "format": "double",
+                "example": 4.5
+            },
+            "phoneNumber": {
+                "type": "string",
+                "pattern": "/^\\+|\\d[\\s\\d\\-\\(\\)]*\\d$/",
+                "example": "+375(33)343242"
+            },
+            "stateNumber": {
+                "type": "string",
+                "example": "6543 KT-3"
+            },
+            "color": {
+                "type": "string",
+                "pattern": "/#([A-F]|[0-9]){6}/",
+                "example": "#FFF133"
+            },
+            "double": {
+                "type": "number",
+                "format": "double"
+            },
+            "status": {
+                "type": "string",
+                "enum": [
+                    "new",
+                    "in progress",
+                    "closed",
+                    "canceled"
+                ]
+            },
+            "loginForm": {
                 "type": "object",
                 "properties": {
-                  "role": {
-                    "$ref": "#/components/schemas/role"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "User role changed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Something wrong in request body",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/drivers": {
-      "get": {
-        "tags": [
-          "drivers"
-        ],
-        "summary": "get all drivers",
-        "operationId": "getAllDrivers",
-        "responses": {
-          "200": {
-            "description": "Array of drivers returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Drivers"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "drivers"
-        ],
-        "summary": "Create driver by admin",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DriverPost"
-              }
-            }
-          }
-        },
-        "operationId": "createDriver",
-        "responses": {
-          "200": {
-            "description": "Driver created, returned id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "$ref": "#/components/schemas/id"
+                    "login": {
+                        "$ref": "#/components/schemas/login"
+                    },
+                    "password": {
+                        "$ref": "#/components/schemas/password"
                     }
-                  }
                 }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Something wrong in request body",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/drivers/{id}": {
-      "get": {
-        "tags": [
-          "drivers"
-        ],
-        "summary": "Gets driver by id",
-        "operationId": "getDriverById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
             },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Driver returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Driver"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Driver not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "drivers"
-        ],
-        "summary": "Change car",
-        "operationId": "changeCar",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
-            },
-            "required": true
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
+            "loginRes": {
                 "type": "object",
                 "properties": {
-                  "carId": {
-                    "$ref": "#/components/schemas/id"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Car changed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Driver"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Driver/car not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Something wrong in request body",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/drivers/cars": {
-      "get": {
-        "tags": [
-          "drivers"
-        ],
-        "summary": "get all cars",
-        "operationId": "getAllCars",
-        "responses": {
-          "200": {
-            "description": "Array of cars returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Cars"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "drivers"
-        ],
-        "summary": "Create car by admin",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CarPost"
-              }
-            }
-          }
-        },
-        "operationId": "createCar",
-        "responses": {
-          "200": {
-            "description": "Car created, returned id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "$ref": "#/components/schemas/id"
+                    "token": {
+                        "$ref": "#/components/schemas/token"
                     }
-                  }
                 }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Something wrong in request body",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/drivers/cars/{id}": {
-      "get": {
-        "tags": [
-          "drivers"
-        ],
-        "summary": "Gets car by id",
-        "operationId": "getCarById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
             },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Car returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Car"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Car not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "drivers"
-        ],
-        "summary": "Delete car by id",
-        "operationId": "deleteCarById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Car deleted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "example": "Car successfully deleted"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Car not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/drivers/comforts": {
-      "get": {
-        "tags": [
-          "drivers"
-        ],
-        "summary": "get all comforts",
-        "operationId": "getAllComforts",
-        "responses": {
-          "200": {
-            "description": "Array of comforts returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Comforts"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/drivers/comforts/{id}/drivers": {
-      "get": {
-        "tags": [
-          "drivers"
-        ],
-        "summary": "get drivers for comfort type",
-        "operationId": "getDriversForComfort",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Drivers returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DriversWithCars"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Comfort type not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/drivers/feedbacks": {
-      "get": {
-        "tags": [
-          "drivers"
-        ],
-        "summary": "get all feedbacks of driver",
-        "operationId": "getFeedbacks",
-        "responses": {
-          "200": {
-            "description": "Array of feedbacks returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Feedbacks"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Driver not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/orders": {
-      "get": {
-        "tags": [
-          "orders"
-        ],
-        "summary": "get all users with their orders",
-        "operationId": "getAllOrdersWithUsers",
-        "responses": {
-          "200": {
-            "description": "Array of users returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsersWithOrders"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "orders"
-        ],
-        "summary": "Create order",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OrderPost"
-              }
-            }
-          }
-        },
-        "operationId": "createOrder",
-        "responses": {
-          "200": {
-            "description": "Order created, returned order info",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "$ref": "#/components/schemas/Order"
+            "signForm": {
+                "type": "object",
+                "properties": {
+                    "login": {
+                        "$ref": "#/components/schemas/login"
+                    },
+                    "password": {
+                        "$ref": "#/components/schemas/password"
+                    },
+                    "email": {
+                        "$ref": "#/components/schemas/email"
                     }
-                  }
                 }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Something wrong in request body",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/orders/history": {
-      "get": {
-        "tags": [
-          "orders"
-        ],
-        "summary": "get all orders of current user",
-        "operationId": "getAllOrders",
-        "responses": {
-          "200": {
-            "description": "Array of orders returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Orders"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/orders/{id}": {
-      "get": {
-        "tags": [
-          "orders"
-        ],
-        "summary": "Get order by id",
-        "operationId": "getOrderById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
             },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Order returned",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Order"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Order not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "orders"
-        ],
-        "summary": "Cancel order by id",
-        "operationId": "cancelOrder",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Order canceled",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Order"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights or order cannot be canceled",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Order not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "orders"
-        ],
-        "summary": "Close order by driver",
-        "operationId": "closeOrder",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Order closed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Order"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights or order cannot be closed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Order not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/orders/{id}/accept": {
-      "patch": {
-        "tags": [
-          "orders"
-        ],
-        "summary": "Accept order by driver",
-        "operationId": "acceptOrder",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Order accepted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Order"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights or order cannot be accepted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Order not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/orders/{id}/feedback": {
-      "post": {
-        "tags": [
-          "orders"
-        ],
-        "summary": "Create feedback",
-        "operationId": "createFeedback",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "$ref": "#/components/schemas/id"
-            },
-            "required": true
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FeedbackPost"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Feedback created, returned feedback info",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
+            "User": {
+                "type": "object",
+                "properties": {
                     "id": {
-                      "$ref": "#/components/schemas/Feedback"
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "login": {
+                        "$ref": "#/components/schemas/login"
+                    },
+                    "password": {
+                        "$ref": "#/components/schemas/password"
+                    },
+                    "role": {
+                        "$ref": "#/components/schemas/role"
+                    },
+                    "isActive": {
+                        "$ref": "#/components/schemas/isActive"
+                    },
+                    "isConfirmed": {
+                        "$ref": "#/components/schemas/isConfirmed"
+                    },
+                    "createdAt": {
+                        "$ref": "#/components/schemas/createdAt"
+                    },
+                    "updatedAt": {
+                        "$ref": "#/components/schemas/updatedAt"
                     }
-                  }
                 }
-              }
-            }
-          },
-          "403": {
-            "description": "Not enought rights",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
+            },
+            "UserPost": {
+                "type": "object",
+                "properties": {
+                    "login": {
+                        "$ref": "#/components/schemas/login"
+                    },
+                    "password": {
+                        "$ref": "#/components/schemas/password"
+                    },
+                    "role": {
+                        "$ref": "#/components/schemas/role"
+                    },
+                    "email": {
+                        "$ref": "#/components/schemas/email"
+                    }
                 }
-              }
-            }
-          },
-          "404": {
-            "description": "Order not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
+            },
+            "Users": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/User"
                 }
-              }
-            }
-          },
-          "406": {
-            "description": "Something wrong in request body",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
+            },
+            "UserInfo": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "userId": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "avatar": {
+                        "$ref": "#/components/schemas/string"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/string"
+                    },
+                    "surname": {
+                        "$ref": "#/components/schemas/string"
+                    },
+                    "dof": {
+                        "$ref": "#/components/schemas/date"
+                    },
+                    "phoneNumber": {
+                        "$ref": "#/components/schemas/phoneNumber"
+                    },
+                    "email": {
+                        "$ref": "#/components/schemas/email"
+                    },
+                    "createdAt": {
+                        "$ref": "#/components/schemas/datetime"
+                    },
+                    "updatedAt": {
+                        "$ref": "#/components/schemas/datetime"
+                    }
                 }
-              }
+            },
+            "UserInfoPut": {
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "avatar": {
+                        "$ref": "#/components/schemas/string"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/string"
+                    },
+                    "surname": {
+                        "$ref": "#/components/schemas/string"
+                    },
+                    "dof": {
+                        "$ref": "#/components/schemas/date"
+                    },
+                    "phoneNumber": {
+                        "$ref": "#/components/schemas/phoneNumber"
+                    },
+                    "email": {
+                        "$ref": "#/components/schemas/email"
+                    }
+                }
+            },
+            "ChangePassword": {
+                "type": "object",
+                "properties": {
+                    "oldPassword": {
+                        "$ref": "#/components/schemas/password"
+                    },
+                    "newPassword": {
+                        "$ref": "#/components/schemas/password"
+                    }
+                }
+            },
+            "Driver": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "userId": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "carId": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "raiting": {
+                        "$ref": "#/components/schemas/raiting"
+                    },
+                    "createdAt": {
+                        "$ref": "#/components/schemas/datetime"
+                    },
+                    "updatedAt": {
+                        "$ref": "#/components/schemas/datetime"
+                    }
+                }
+            },
+            "Drivers": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Driver"
+                }
+            },
+            "DriverPost": {
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "carId": {
+                        "$ref": "#/components/schemas/id"
+                    }
+                }
+            },
+            "Car": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "stateNumber": {
+                        "$ref": "#/components/schemas/stateNumber"
+                    },
+                    "model": {
+                        "$ref": "#/components/schemas/string"
+                    },
+                    "color": {
+                        "$ref": "#/components/schemas/color"
+                    },
+                    "comfortId": {
+                        "$ref": "#/components/schemas/id"
+                    }
+                }
+            },
+            "Cars": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Car"
+                }
+            },
+            "CarPost": {
+                "type": "object",
+                "properties": {
+                    "stateNumber": {
+                        "$ref": "#/components/schemas/stateNumber"
+                    },
+                    "model": {
+                        "$ref": "#/components/schemas/string"
+                    },
+                    "color": {
+                        "$ref": "#/components/schemas/color"
+                    },
+                    "comfortId": {
+                        "$ref": "#/components/schemas/id"
+                    }
+                }
+            },
+            "Comfort": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "typeName": {
+                        "$ref": "#/components/schemas/string"
+                    },
+                    "startPrice": {
+                        "type": "number",
+                        "format": "double",
+                        "minimum": 0
+                    },
+                    "tariff": {
+                        "type": "number",
+                        "format": "double",
+                        "minimum": 0
+                    }
+                }
+            },
+            "Comforts": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Comfort"
+                }
+            },
+            "DriverWithCar": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "userId": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "carId": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "raiting": {
+                        "$ref": "#/components/schemas/raiting"
+                    },
+                    "createdAt": {
+                        "$ref": "#/components/schemas/datetime"
+                    },
+                    "updatedAt": {
+                        "$ref": "#/components/schemas/datetime"
+                    },
+                    "car": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "$ref": "#/components/schemas/id"
+                            },
+                            "stateNumber": {
+                                "$ref": "#/components/schemas/stateNumber"
+                            },
+                            "model": {
+                                "$ref": "#/components/schemas/string"
+                            },
+                            "color": {
+                                "$ref": "#/components/schemas/color"
+                            },
+                            "comfortId": {
+                                "$ref": "#/components/schemas/id"
+                            }
+                        }
+                    }
+                }
+            },
+            "DriversWithCars": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/DriverWithCar"
+                }
+            },
+            "Order": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "customerId": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "driverId": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "date": {
+                        "$ref": "#/components/schemas/datetime"
+                    },
+                    "startPointX": {
+                        "$ref": "#/components/schemas/double"
+                    },
+                    "startPointY": {
+                        "$ref": "#/components/schemas/double"
+                    },
+                    "endPointX": {
+                        "$ref": "#/components/schemas/double"
+                    },
+                    "endPointY": {
+                        "$ref": "#/components/schemas/double"
+                    },
+                    "price": {
+                        "$ref": "#/components/schemas/double"
+                    },
+                    "passedDistance": {
+                        "$ref": "#/components/schemas/double"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/status"
+                    },
+                    "createdAt": {
+                        "$ref": "#/components/schemas/datetime"
+                    },
+                    "updatedAt": {
+                        "$ref": "#/components/schemas/datetime"
+                    }
+                }
+            },
+            "Orders": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Order"
+                }
+            },
+            "OrderPost": {
+                "type": "object",
+                "properties": {
+                    "date": {
+                        "$ref": "#/components/schemas/datetime"
+                    },
+                    "startPointX": {
+                        "$ref": "#/components/schemas/double"
+                    },
+                    "startPointY": {
+                        "$ref": "#/components/schemas/double"
+                    },
+                    "endPointX": {
+                        "$ref": "#/components/schemas/double"
+                    },
+                    "endPointY": {
+                        "$ref": "#/components/schemas/double"
+                    },
+                    "price": {
+                        "$ref": "#/components/schemas/double"
+                    },
+                    "passedDistance": {
+                        "$ref": "#/components/schemas/double"
+                    }
+                }
+            },
+            "UserWithOrders": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "login": {
+                        "$ref": "#/components/schemas/login"
+                    },
+                    "password": {
+                        "$ref": "#/components/schemas/password"
+                    },
+                    "role": {
+                        "$ref": "#/components/schemas/role"
+                    },
+                    "isActive": {
+                        "$ref": "#/components/schemas/isActive"
+                    },
+                    "isConfirmed": {
+                        "$ref": "#/components/schemas/isConfirmed"
+                    },
+                    "createdAt": {
+                        "$ref": "#/components/schemas/createdAt"
+                    },
+                    "updatedAt": {
+                        "$ref": "#/components/schemas/updatedAt"
+                    },
+                    "orders": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Order"
+                        }
+                    }
+                }
+            },
+            "UsersWithOrders": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/UserWithOrders"
+                }
+            },
+            "Feedback": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "orderId": {
+                        "$ref": "#/components/schemas/id"
+                    },
+                    "raiting": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 5
+                    },
+                    "feedback": {
+                        "$ref": "#/components/schemas/string"
+                    },
+                    "createdAt": {
+                        "$ref": "#/components/schemas/datetime"
+                    },
+                    "updatedAt": {
+                        "$ref": "#/components/schemas/datetime"
+                    }
+                }
+            },
+            "Feedbacks": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Feedback"
+                }
+            },
+            "FeedbackPost": {
+                "type": "object",
+                "properties": {
+                    "raiting": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 5
+                    },
+                    "feedback": {
+                        "$ref": "#/components/schemas/string"
+                    }
+                }
+            },
+            "error": {
+                "type": "string",
+                "description": "error message",
+                "example": "something went wrong"
             }
-          }
         }
-      }
     }
-  },
-  "components": {
-    "schemas": {
-      "id": {
-        "type": "integer",
-        "example": 1
-      },
-      "token": {
-        "type": "string",
-        "description": "user jwt-token"
-      },
-      "login": {
-        "type": "string"
-      },
-      "password": {
-        "type": "string"
-      },
-      "email": {
-        "type": "string",
-        "example": "email@email.com"
-      },
-      "role": {
-        "type": "string",
-        "enum": [
-          "user",
-          "driver",
-          "admin"
-        ]
-      },
-      "isActive": {
-        "type": "boolean",
-        "default": true
-      },
-      "isConfirmed": {
-        "type": "boolean",
-        "default": true
-      },
-      "createdAt": {
-        "type": "string",
-        "format": "date-time"
-      },
-      "updatedAt": {
-        "type": "string",
-        "format": "date-time"
-      },
-      "string": {
-        "type": "string"
-      },
-      "date": {
-        "type": "string",
-        "format": "date"
-      },
-      "datetime": {
-        "type": "string",
-        "format": "date-time"
-      },
-      "raiting": {
-        "type": "number",
-        "minimum": 0,
-        "maximum": 5,
-        "format": "double",
-        "example": 4.5
-      },
-      "phoneNumber": {
-        "type": "string",
-        "pattern": "/^\\+|\\d[\\s\\d\\-\\(\\)]*\\d$/",
-        "example": "+375(33)343242"
-      },
-      "stateNumber": {
-        "type": "string",
-        "example": "6543 KT-3"
-      },
-      "color": {
-        "type": "string",
-        "pattern": "/#([A-F]|[0-9]){6}/",
-        "example": "#FFF133"
-      },
-      "double": {
-        "type": "number",
-        "format": "double"
-      },
-      "status": {
-        "type": "string",
-        "enum": [
-          "new",
-          "in progress",
-          "closed",
-          "canceled"
-        ]
-      },
-      "loginForm": {
-        "type": "object",
-        "properties": {
-          "login": {
-            "$ref": "#/components/schemas/login"
-          },
-          "password": {
-            "$ref": "#/components/schemas/password"
-          }
-        }
-      },
-      "loginRes": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "$ref": "#/components/schemas/token"
-          }
-        }
-      },
-      "signForm": {
-        "type": "object",
-        "properties": {
-          "login": {
-            "$ref": "#/components/schemas/login"
-          },
-          "password": {
-            "$ref": "#/components/schemas/password"
-          },
-          "email": {
-            "$ref": "#/components/schemas/email"
-          }
-        }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/id"
-          },
-          "login": {
-            "$ref": "#/components/schemas/login"
-          },
-          "password": {
-            "$ref": "#/components/schemas/password"
-          },
-          "role": {
-            "$ref": "#/components/schemas/role"
-          },
-          "isActive": {
-            "$ref": "#/components/schemas/isActive"
-          },
-          "isConfirmed": {
-            "$ref": "#/components/schemas/isConfirmed"
-          },
-          "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
-          },
-          "updatedAt": {
-            "$ref": "#/components/schemas/updatedAt"
-          }
-        }
-      },
-      "UserPost": {
-        "type": "object",
-        "properties": {
-          "login": {
-            "$ref": "#/components/schemas/login"
-          },
-          "password": {
-            "$ref": "#/components/schemas/password"
-          },
-          "role": {
-            "$ref": "#/components/schemas/role"
-          },
-          "email": {
-            "$ref": "#/components/schemas/email"
-          }
-        }
-      },
-      "Users": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/User"
-        }
-      },
-      "UserInfo": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/id"
-          },
-          "userId": {
-            "$ref": "#/components/schemas/id"
-          },
-          "avatar": {
-            "$ref": "#/components/schemas/string"
-          },
-          "name": {
-            "$ref": "#/components/schemas/string"
-          },
-          "surname": {
-            "$ref": "#/components/schemas/string"
-          },
-          "dof": {
-            "$ref": "#/components/schemas/date"
-          },
-          "phoneNumber": {
-            "$ref": "#/components/schemas/phoneNumber"
-          },
-          "email": {
-            "$ref": "#/components/schemas/email"
-          },
-          "createdAt": {
-            "$ref": "#/components/schemas/datetime"
-          },
-          "updatedAt": {
-            "$ref": "#/components/schemas/datetime"
-          }
-        }
-      },
-      "UserInfoPut": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "$ref": "#/components/schemas/id"
-          },
-          "avatar": {
-            "$ref": "#/components/schemas/string"
-          },
-          "name": {
-            "$ref": "#/components/schemas/string"
-          },
-          "surname": {
-            "$ref": "#/components/schemas/string"
-          },
-          "dof": {
-            "$ref": "#/components/schemas/date"
-          },
-          "phoneNumber": {
-            "$ref": "#/components/schemas/phoneNumber"
-          },
-          "email": {
-            "$ref": "#/components/schemas/email"
-          }
-        }
-      },
-      "ChangePassword": {
-        "type": "object",
-        "properties": {
-          "oldPassword": {
-            "$ref": "#/components/schemas/password"
-          },
-          "newPassword": {
-            "$ref": "#/components/schemas/password"
-          }
-        }
-      },
-      "Driver": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/id"
-          },
-          "userId": {
-            "$ref": "#/components/schemas/id"
-          },
-          "carId": {
-            "$ref": "#/components/schemas/id"
-          },
-          "raiting": {
-            "$ref": "#/components/schemas/raiting"
-          },
-          "createdAt": {
-            "$ref": "#/components/schemas/datetime"
-          },
-          "updatedAt": {
-            "$ref": "#/components/schemas/datetime"
-          }
-        }
-      },
-      "Drivers": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/Driver"
-        }
-      },
-      "DriverPost": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "$ref": "#/components/schemas/id"
-          },
-          "carId": {
-            "$ref": "#/components/schemas/id"
-          }
-        }
-      },
-      "Car": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/id"
-          },
-          "stateNumber": {
-            "$ref": "#/components/schemas/stateNumber"
-          },
-          "model": {
-            "$ref": "#/components/schemas/string"
-          },
-          "color": {
-            "$ref": "#/components/schemas/color"
-          },
-          "comfortId": {
-            "$ref": "#/components/schemas/id"
-          }
-        }
-      },
-      "Cars": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/Car"
-        }
-      },
-      "CarPost": {
-        "type": "object",
-        "properties": {
-          "stateNumber": {
-            "$ref": "#/components/schemas/stateNumber"
-          },
-          "model": {
-            "$ref": "#/components/schemas/string"
-          },
-          "color": {
-            "$ref": "#/components/schemas/color"
-          },
-          "comfortId": {
-            "$ref": "#/components/schemas/id"
-          }
-        }
-      },
-      "Comfort": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/id"
-          },
-          "typeName": {
-            "$ref": "#/components/schemas/string"
-          },
-          "startPrice": {
-            "type": "number",
-            "format": "double",
-            "minimum": 0
-          },
-          "tariff": {
-            "type": "number",
-            "format": "double",
-            "minimum": 0
-          }
-        }
-      },
-      "Comforts": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/Comfort"
-        }
-      },
-      "DriverWithCar": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/id"
-          },
-          "userId": {
-            "$ref": "#/components/schemas/id"
-          },
-          "carId": {
-            "$ref": "#/components/schemas/id"
-          },
-          "raiting": {
-            "$ref": "#/components/schemas/raiting"
-          },
-          "createdAt": {
-            "$ref": "#/components/schemas/datetime"
-          },
-          "updatedAt": {
-            "$ref": "#/components/schemas/datetime"
-          },
-          "car": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "$ref": "#/components/schemas/id"
-              },
-              "stateNumber": {
-                "$ref": "#/components/schemas/stateNumber"
-              },
-              "model": {
-                "$ref": "#/components/schemas/string"
-              },
-              "color": {
-                "$ref": "#/components/schemas/color"
-              },
-              "comfortId": {
-                "$ref": "#/components/schemas/id"
-              }
-            }
-          }
-        }
-      },
-      "DriversWithCars": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/DriverWithCar"
-        }
-      },
-      "Order": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/id"
-          },
-          "customerId": {
-            "$ref": "#/components/schemas/id"
-          },
-          "driverId": {
-            "$ref": "#/components/schemas/id"
-          },
-          "date": {
-            "$ref": "#/components/schemas/datetime"
-          },
-          "startPointX": {
-            "$ref": "#/components/schemas/double"
-          },
-          "startPointY": {
-            "$ref": "#/components/schemas/double"
-          },
-          "endPointX": {
-            "$ref": "#/components/schemas/double"
-          },
-          "endPointY": {
-            "$ref": "#/components/schemas/double"
-          },
-          "price": {
-            "$ref": "#/components/schemas/double"
-          },
-          "passedDistance": {
-            "$ref": "#/components/schemas/double"
-          },
-          "status": {
-            "$ref": "#/components/schemas/status"
-          },
-          "createdAt": {
-            "$ref": "#/components/schemas/datetime"
-          },
-          "updatedAt": {
-            "$ref": "#/components/schemas/datetime"
-          }
-        }
-      },
-      "Orders": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/Order"
-        }
-      },
-      "OrderPost": {
-        "type": "object",
-        "properties": {
-          "date": {
-            "$ref": "#/components/schemas/datetime"
-          },
-          "startPointX": {
-            "$ref": "#/components/schemas/double"
-          },
-          "startPointY": {
-            "$ref": "#/components/schemas/double"
-          },
-          "endPointX": {
-            "$ref": "#/components/schemas/double"
-          },
-          "endPointY": {
-            "$ref": "#/components/schemas/double"
-          },
-          "price": {
-            "$ref": "#/components/schemas/double"
-          },
-          "passedDistance": {
-            "$ref": "#/components/schemas/double"
-          }
-        }
-      },
-      "UserWithOrders": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/id"
-          },
-          "login": {
-            "$ref": "#/components/schemas/login"
-          },
-          "password": {
-            "$ref": "#/components/schemas/password"
-          },
-          "role": {
-            "$ref": "#/components/schemas/role"
-          },
-          "isActive": {
-            "$ref": "#/components/schemas/isActive"
-          },
-          "isConfirmed": {
-            "$ref": "#/components/schemas/isConfirmed"
-          },
-          "createdAt": {
-            "$ref": "#/components/schemas/createdAt"
-          },
-          "updatedAt": {
-            "$ref": "#/components/schemas/updatedAt"
-          },
-          "orders": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Order"
-            }
-          }
-        }
-      },
-      "UsersWithOrders": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/UserWithOrders"
-        }
-      },
-      "Feedback": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/id"
-          },
-          "orderId": {
-            "$ref": "#/components/schemas/id"
-          },
-          "raiting": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 5
-          },
-          "feedback": {
-            "$ref": "#/components/schemas/string"
-          },
-          "createdAt": {
-            "$ref": "#/components/schemas/datetime"
-          },
-          "updatedAt": {
-            "$ref": "#/components/schemas/datetime"
-          }
-        }
-      },
-      "Feedbacks": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/Feedback"
-        }
-      },
-      "FeedbackPost": {
-        "type": "object",
-        "properties": {
-          "raiting": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 5
-          },
-          "feedback": {
-            "$ref": "#/components/schemas/string"
-          }
-        }
-      },
-      "error": {
-        "type": "string",
-        "description": "error message",
-        "example": "something went wrong"
-      }
-    }
-  }
 }
