@@ -1,0 +1,23 @@
+{
+    "development": {
+        "username": "test",
+        "password": "12345678",
+        "database": "taxi",
+        "host": "127.0.0.1",
+        "dialect": "postgres"
+    },
+    "test": {
+        "username": "test",
+        "password": "12345678",
+        "database": "taxidb",
+        "host": "127.0.0.1",
+        "dialect": "postgres"
+    },
+    "production": {
+        "username": "test",
+        "password": "12345678",
+        "database": "taxi",
+        "host": "127.0.0.1",
+        "dialect": "postgres"
+    }
+}
