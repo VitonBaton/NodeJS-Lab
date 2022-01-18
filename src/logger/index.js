@@ -18,7 +18,8 @@ class Logger {
             await log.save();
             next();
         } catch (err) {
-            console.log(err);
+            throw err;
+            // console.log(err);
         }
     }
 
@@ -30,7 +31,8 @@ class Logger {
             });
             await log.save();
         } catch (err) {
-            console.log(err);
+            throw err;
+            //console.log(err);
         }
     }
 }

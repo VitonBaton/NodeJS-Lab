@@ -52,7 +52,11 @@ class LoginController {
     async signUp(req, res, next) {
         try {
             const userData = req.body;
-            await usersService.createUser(userData).then((result) => { res.status(201).send({ id: result.id }) });
+            //await usersService.createUser(userData).then((result) => { res.status(201).send({ id: result.id }) });
+            const result = await usersService.createUser(userData);
+            //req.id = result.id;
+            //res.status(201).send({ id: result.id });
+            await res.delegate('mailer');
         } catch (err) {
             return next(err);
         }

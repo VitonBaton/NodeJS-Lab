@@ -70,6 +70,9 @@ class UsersService {
 
     async deleteUser(userId) {
         const result = await usersRepository.deleteById(userId);
+        if (result == 0) {
+            throw new NotFoundError('User not found');
+        }
         return result;
     }
 
